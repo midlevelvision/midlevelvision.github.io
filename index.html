@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"/>
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="apple-touch-fullscreen" content="yes"/>
+	<meta name="msapplication-tap-highlight" content="no"/>
+
+	<meta name="keywords" content="midlevel, mid-level, features, representations, feature learning, meta-learning, metalearning, transfer learning, computer vision, vision, berkeley, stanford, facebook, fair, CVPR, tasks">
+	<meta name="description" content="Mid-Level Visual Representations for Improving Generalization and Sample Efficiency of Visuomotor Policies. UC Berkeley, FAIR, Stanford. A large-scale study of how to use pretrained perception networks for performing active tasks.">
+	<meta name="google-site-verification" content="tBb4aimY-zxYS_s_z86g6faxMX2G_I_Wp_kzbF3U_RM" />
+	<title>Mid-Level Visual Representations for Improving Generalization and Sample Efficiency of Visuomotor Policies</title>
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+	 
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-141885498-1"></script>
+    <script>
+  window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+        gtag('config', 'UA-141885498-1');
+	</script>
+
+	<!-- Google font -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CVarela+Round" rel="stylesheet">
+	
+	<!-- Bootstrap -->
+	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+
+	<!-- Owl Carousel -->
+	<link type="text/css" rel="stylesheet" href="css/owl.carousel.css" />
+	<link type="text/css" rel="stylesheet" href="css/owl.theme.default.css" />
+
+	<!-- Magnific Popup -->
+	<link type="text/css" rel="stylesheet" href="css/magnific-popup.css" />
+
+	<!-- Icons -->
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css">
+	
+	<!-- Custom stylesheet -->
+	<link type="text/css" rel="stylesheet" href="css/style.css" />
+	<link type="text/css" rel="stylesheet" href="css/index.css" />
+	<link type="text/css" rel="stylesheet" href="css/cvpr-video.css"/>
+	<link type="text/css" rel="stylesheet" href="/css/styletest.css" />
+
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+
+	<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" /> -->
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script> -->
+
+
+	
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-89674082-5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-89674082-5');
+</script>
+
+
+   <style>
+	/* body {
+		text-align: center;
+	} */
+
+	svg {
+		margin: 10px;
+	}
+
+	svg path {
+		fill: none;
+		stroke: #3A589488;
+		stroke-width: 0.1;
+		stroke-linecap: square;
+	}
+
+	svg path.skeleton {
+		stroke: #c09f80;
+		stroke-width: 0.1;
+	}
+	</style>
+
+
+
+
+
+<!-- Load the Paper.js library -->
+<script type="text/javascript" src="/js/paper-full.min.js"></script>
+<script type="text/javascript" src="/js/voronoi.js"></script>
+
+
+
+
+</head>
+
+
+<body>
+
+
+	<!-- Header -->
+	<header id="home">
+
+
+		<!-- Nav -->
+		<nav id="nav" class="navbar nav-transparent">
+			<div class="container">
+
+				<div class="navbar-header">
+					<!-- Logo -->
+					<div class="navbar-brand">
+						<a href="http://bair.berkeley.edu/">							
+							<img class="logo" src="./img/berkeley-logo.png" alt="logo">
+							<img class="logo-alt" src="./img/berkeley-logo-white.png" alt="logo">
+							<!-- <img class="logo-alt" src="./img/logo-alt.png" alt="logo"> -->
+						</a>
+						<!-- <a class="logo-text" href="//perceptual.actor">Perceptual|Actor</a> -->
+						<a href="http://svl.stanford.edu/">
+								<img class="logo" src="./img/stanford-logo.png" alt="logo">
+								<img class="logo-alt" src="./img/stanford-logo-white.png" alt="logo">
+						</a>
+					</div>
+					<!-- /Logo -->
+
+					<!-- Collapse nav button -->
+					<div class="nav-collapse">
+						<span></span>
+					</div>
+					<!-- /Collapse nav button -->
+				</div>
+
+				<!--  Main navigation  -->
+				<ul class="main-nav nav navbar-nav navbar-right">
+					<li><a href="#home">Home</a></li>
+					<li><a href="policy_explorer/">Policy Explorer</a></li>
+					<li><a href="generalization_curves/">Performance Curves</a></li>
+					<li><a href="#paper">Paper</a></li>					
+					<li><a href="#team">Team</a></li>
+					<!-- <li class="has-dropdown"><a href="#blog">Blog</a> -->
+						<!-- <ul class="dropdown"> -->
+							<!-- <li><a href="blog-single.html">blog post</a></li> -->
+						<!-- </ul> -->
+					<!-- </li> -->
+					<!-- <li><a href="#contact">Contact</a></li> -->
+				</ul>
+				<!-- /Main navigation -->
+
+			</div>
+		</nav>
+		<!-- /Nav -->
+
+		<div style="text-align: center;" class="bg-img" id='particles'>
+									
+		<!-- Background Image -->
+				<!-- Define inlined PaperScript associate it with myCanvas -->
+				<script type="text/paperscript" canvas="myCanvas">
+					var voronoi =  new Voronoi();
+					var sites = generateBeeHivePoints(view.size / 100, true);
+					var bbox, diagram;
+					var oldSize = view.size;
+					var spotColor = new Color('#D7CEC7'); // '#c09f80'
+					var mousePos = view.center;
+					var selected = false;
+					
+					onResize();
+					
+					function onMouseDown(event) {
+						sites.push(event.point);
+						renderDiagram();
+					}
+					
+					function onMouseMove(event) {
+						mousePos = event.point;
+						if (event.count == 0)
+							sites.push(event.point);
+						sites[sites.length - 1] = event.point;
+						renderDiagram();
+					}
+					
+					function renderDiagram() {
+						project.activeLayer.children = [];
+						var diagram = voronoi.compute(sites, bbox);
+						if (diagram) {
+							for (var i = 0, l = sites.length; i < l; i++) {
+								var cell = diagram.cells[sites[i].voronoiId];
+								if (cell) {
+									var halfedges = cell.halfedges,
+										length = halfedges.length;
+									if (length > 2) {
+										var points = [];
+										for (var j = 0; j < length; j++) {
+											v = halfedges[j].getEndpoint();
+											points.push(new Point(v));
+										}
+										createPath(points, sites[i]);
+									}
+								}
+							}
+						}
+					}
+					
+					function removeSmallBits(path) {
+						var averageLength = path.length / path.segments.length;
+						var min = path.length / 50;
+						for(var i = path.segments.length - 1; i >= 0; i--) {
+							var segment = path.segments[i];
+							var cur = segment.point;
+							var nextSegment = segment.next;
+							var next = nextSegment.point + nextSegment.handleIn;
+							if (cur.getDistance(next) < min) {
+								segment.remove();
+							}
+						}
+					}
+					
+					function generateBeeHivePoints(size, loose) {
+						var points = [];
+						var col = view.size / size;
+						for(var i = -1; i < size.width + 1; i++) {
+							for(var j = -1; j < size.height + 1; j++) {
+								var point = new Point(i, j) / new Point(size) * view.size + col / 2;
+								if(j % 2)
+									point += new Point(col.width / 2, 0);
+								if(loose)
+									point += (col / 4) * Point.random() - col / 4;
+								points.push(point);
+							}
+						}
+						return points;
+					}
+					function createPath(points, center) {
+						var path = new Path();
+						if (!selected) { 
+							path.fillColor = spotColor;
+						} else {
+							path.fullySelected = selected;
+						}
+						path.closed = true;
+					
+						for (var i = 0, l = points.length; i < l; i++) {
+							var point = points[i];
+							var next = points[(i + 1) == points.length ? 0 : i + 1];
+							var vector = (next - point) / 2;
+							path.add({
+								point: point + vector,
+								handleIn: -vector,
+								handleOut: vector
+							});
+						}
+						path.scale(0.98);
+						removeSmallBits(path);
+						return path;
+					}
+					
+					function onResize() {
+						var margin = 0;
+						bbox = {
+							xl: margin,
+							xr: view.bounds.width - margin,
+							yt: margin,
+							yb: view.bounds.height - margin
+						};
+						for (var i = 0, l = sites.length; i < l; i++) {
+							sites[i] = sites[i] * view.size / oldSize;
+						}
+						oldSize = view.size;
+						renderDiagram();
+					}
+					
+					function onKeyDown(event) {
+						if (event.key == 'space') {
+							selected = !selected;
+							renderDiagram();
+						}
+					}
+				</script>
+				
+				
+				
+				
+				
+			<div class="overlay">
+				<canvas resize id="myCanvas"data-paper-scope="1"></canvas>
+			</div>
+
+		<!-- /Background Image -->
+		</div>
+
+
+	
+
+		<!-- home wrapper -->
+		<div class="home-wrapper">
+
+			<div class="container">
+				
+				<div class="row">
+		
+					<!-- home content -->
+					<div class="col-md-12">
+						<div class="home-content">
+							<!-- <h4 class="second-color">On Perception for Robotics:</h3> -->
+								
+							<h2 class="second-color"><span>Mid-Level Visual Representations for Improving Generalization and Sample Efficiency of Visuomotor Policies</h2>	
+							
+							<div >
+								<h4 class="main-color" style='margin-bottom: 0.1em'>In Conference on Robot Learning (CoRL) 2019</h4>
+									
+								<h4 class="main-color" style='margin-bottom: 0.1em'>In BayLearn 2019 [Oral]</h4>
+								<h4 class="main-color">Winner of CVPR19 Habitat Embodied Agent Challenge [RGB Track]</h4>
+							</div>
+							<!-- <h5 class="main-color">In BayLearn 2019, Oral</h5>	
+							<h5 class="main-color">Winner of CVPR19 Habitat Embodied Agent Challenge [RGB Track]</h5>	 -->
+
+
+							<a class="second-color" href="https://alexsax.github.io/">Alexander Sax,</a><span style=color:#FFFFFF88;></span>
+							<a class="second-color" href="https://jozhang97.github.io/">Jeffrey O. Zhang,</a><span style=color:#FFFFFF88;></span>
+							<a class="second-color" href="http://www.bradleyemi.com/">Bradley Emi,</a><span style=color:#FFFFFF88;></span>
+							<a class="second-color" href="http://www.cs.stanford.edu/~amirz/">Amir R. Zamir,</a>
+							<!-- <br> -->
+							<a class="second-color" href="https://geometry.stanford.edu/member/guibas/">Leonidas Guibas,</a><span style=color:#FFFFFF88;></span>
+							<a class="second-color" href="http://cvgl.stanford.edu/silvio/">Silvio Savarese,</a><span style=color:#FFFFFF88;></span>					
+							<a class="second-color" href="https://people.eecs.berkeley.edu/~malik/">Jitendra Malik</a>
+							<br>
+ 						
+							<button id="learnmore" class="outline-btn roundedbutton" onclick="window.location.href='#abstract'">Learn more</button>
+						</div>
+					</div>
+					<!-- /home content -->
+
+				</div>
+			</div>
+		</div>
+		<!-- /home wrapper -->
+
+	</header>
+	<!-- /Header -->
+
+
+	<!-- Teaser -->
+	<div id="teaser" class="section bg-grey">
+			
+		<!-- Container -->
+		<div class="container">
+			<div class="row" style="margin: 0px">
+
+
+				<!-- service -->
+				<div class="col-md-6 col-sm-6">
+					<div class="service" href="#policy_explorer" onclick="window.location.href='/policy_explorer'">
+						<div class="service-content service-row-2">																		
+							<i class="fa fa-cog"></i>
+						<h3>Policy Explorer</h3>
+						<p>See what the agent sees. Visualize and compare agents' behavior in unseen buildings.</p>
+						<a href="/policy_explorer">Explorer Page</a>	
+						</div>
+					</div>
+				</div>
+				<!-- /service -->
+				
+
+				<!-- service -->
+				<div class="col-md-6 col-sm-6">
+					<div class="service" href="./generalization_curves" onclick="window.location.href='./generalization_curves'">
+						<div class="service-content service-row-2">																		
+							<i class="fa fa-flask"></i>
+						<h3>Performance Curves</h3>
+						<p>Quantitatively compare agents' performance in new environments.</p>
+						<a href="./generalization_curves">View Curves</a>						
+						</div>
+					</div>
+				</div>
+				<!-- /service -->				
+				
+			</div>
+			
+			<!-- Row -->
+			<div class="row" style="margin: 0px">
+				
+				<!-- service -->
+				<div class="col-md-4 col-sm-6">
+					<div class="service smoothscroll" href="#paper" onclick="window.location.href='#paper'">
+						<div class="service-content service-row-1">																		
+							<i class="fa fa-file-text-o"></i>
+							<h3>Paper</h3>
+							<p>The paper and supplementary material describing the methodology and evaluation.</p>
+							<a href="#paper">PDF</a>																					
+						</div>
+					</div>
+				</div>
+				<!-- /service -->
+
+				<!-- service -->
+				<div class="col-md-4 col-sm-6">
+					<div class="service smoothscroll" href="//www.youtube.com/watch?v=1Tg0dnOv1Yc&feature=youtu.be"  onclick="window.location.href='//www.youtube.com/watch?v=1Tg0dnOv1Yc&feature=youtu.be'">
+						<div class="service-content  service-row-1">																		
+							<i class="fa fa-video-camera"></i>
+							<h3>Overview Video</h3>
+							<p>Brief video summary of the paper, methodology, and results.</p>
+							<a href="//www.youtube.com/watch?v=1Tg0dnOv1Yc&feature=youtu.be">See video (YouTube)</a>							
+						</div>
+					</div>
+				</div>
+				<!-- /service -->
+
+				<!-- service -->
+				<div class="col-md-4 col-sm-6">
+					<div class="service smoothscroll" href="//github.com/alexsax/midlevel-reps" onclick="window.location.href='//github.com/alexsax/midlevel-reps'">
+							<div class="service-content service-row-1">																		
+							<i class="fa fa-cogs"></i>
+							<h3>Code</h3>
+							<p>View code, install the <strong>visualpriors</strong> package, and run experiments via Docker.</p>
+							<a href="https://github.com/alexsax/midlevel-reps">Get started</a>							
+
+						</div>
+					</div>
+				</div>
+				<!-- /service -->
+
+			
+			</div>
+			<!-- /Row -->
+
+			<!-- /Row -->			
+
+		</div>
+		<!-- /Container -->
+	</div>	
+	<!-- /Teaser -->
+
+
+
+
+
+	<!-- Abstract -->
+	<div id="abstract" class="section md-padding">
+		<!-- Container -->
+		<div class="container">
+			<!-- Row -->
+			<div class="row">
+				<!-- Section header -->
+				<div class="section-header text-center">
+					<h2 class="title">Summary</h2>
+				</div>
+				<!-- /Section header -->
+				<div class="abstract-body col-md-12">
+					<p> 
+						How much does having <strong>visual priors about the world</strong> (e.g. the fact that the world is 3D) assist in learning to perform <strong>downstream motor tasks</strong> (e.g. delivering a package)?
+						We study this question by integrating a generic perceptual skill set (e.g. a distance estimator, an edge detector, etc.) within a reinforcement learning framework--see Figure 1.
+						This skill set (hereafter <strong>mid-level perception</strong>) provides the policy with a more processed state of the world compared to raw images. 
+						<br>
+						<br>
+						We find that using a mid-level perception confers significant advantages over training end-to-end from scratch (i.e. not leveraging priors) in navigation-oriented tasks. Agents are able to generalize to situations where the from-scratch approach fails and training becomes significantly more sample efficient. However, we show that realizing these gains requires careful selection of the mid-level perceptual skills. This suggests that using a set of features could provide better generic perception, and we computationally derive and experimentally validate an example of such a set: the max-coverage feature set that can be adopted in lieu of raw images. We perform our study using completely separate buildings for training and testing and compare against multiple controls and state-of-the-art feature learning methods.
+						<br>
+						<br>
+						Click <a href=//www.youtube.com/watch?v=1Tg0dnOv1Yc&feature=youtu.be>here</a> for a brief video overview.
+					</p>
+					<div class="figure">
+						<video width="100%" height="464" playsinline autoplay center loop muted class="video-bg" id="video-bg" poster="./loading.gif">
+							<source src="./assets/videos/teaser.mp4" type="video/mp4" alt="HTML5 background video">
+						</video>						
+						<p><strong>Mid-level perception in an end-to-end framework for learning visuomotor tasks.</strong> We systematically study if/how a set of generic mid-level vision features can help with learning arbitrary downstream visuomotor tasks. We report significant advantages in sample efficiency, generalization, and final performance.<br>
+						[The above video of the Husky robot is in the <a href="http://taskonomy.vision">Gibson Environment</a>]</p>
+					</div>    	
+				</div>			
+			</div>
+			<!-- /Row -->
+		</div>
+		<!-- /Container -->
+	</div>
+	<!-- /Abstract -->
+
+
+
+
+
+	<!-- Abstract -->
+	<div id="representations" class="section md-padding">
+		<!-- Container -->
+		<div class="container">
+			<!-- Row -->
+			<div class="row">
+				<!-- Section header -->
+				<div class="section-header text-center">
+					<h2 class="title">Mid-Level Visual Representations</h2>
+				</div>
+				<!-- /Section header -->
+				<div class="abstract-body col-md-12">
+					We use a set of standard and imperfect visual estimators (e.g. depth, vanishing points, objects, etc.) and refer to them as mid-level vision objectives. We use <a href="http://taskonomy.vision">Taskonomy CVPR18</a>'s task bank for this purpose. Frame-by-frame results of the mid-level visual estimators for a sample video is shown below. 
+					<div class="figure">
+						<video width="100%" height="464" playsinline autoplay center loop muted class="video-bg" id="video-bg" poster="./loading.gif">
+							<source src="./assets/videos/mid_nav.mp4" type="video/mp4" alt="HTML5 background video">
+						</video>						
+					</div>
+<!-- 
+					<div class="figure">
+						<video width="100%" height="464" playsinline autoplay center loop muted class="video-bg" id="video-bg" poster="./loading.gif">
+							<source src="./assets/videos/mid_doom.mp4" type="video/mp4" alt="HTML5 background video">
+						</video>						
+						<p><strong>Process overview.</strong> Transfer learning setup and an illustation of the testing framework.</p>
+					</div> 
+-->
+				</div>			
+			</div>
+			<!-- /Row -->
+		</div>
+		<!-- /Container -->
+	</div>
+	<!-- /representations -->
+
+
+
+
+
+
+		<!-- tasks -->
+	<div id="tasks" class="section md-padding">
+		<!-- Container -->
+		<div class="container">
+			<!-- Row -->
+			<div class="row">
+				<!-- Section header -->
+				<div class="section-header text-center">
+					<h2 class="title">Robotic tasks used in the study</h2>
+				</div>
+				<!-- /Section header -->
+				<div class="abstract-body col-md-12">
+					 We study if mid-level vision can improve learning downstream (active) tasks, compared to both learning perception from scratch and also state-of-the-art representation learning techniques. We evaluate the efficacy of these approaches based on <strong>how quickly the visuomotor task is learned</strong> and <strong>how well the policies generalize to unseen test spaces</strong>. 
+					 For the mid-level features, we do not care about the objective-specific performance of visual estimators or their related vision-based metrics--as our sole goal is the downstream task. Three sample robotic tasks were used in the study: visual-target navigation, maximum coverage visual exploration, and visual local planning.
+					 <br>
+					 <br>
+					 Each column in the figure below shows a representative episode for a policy on a specific task: the two rows show the drastically different behaviors with/without a mid-level perception. The advantage of using a mid-level perception (top) is clear. All policies are tested in completely different buildings than those seen during training. For more, head to the policy explorer page to see more examples for any choice of features. 					
+					<div class="figure">
+						<video width="100%" height="464" playsinline autoplay center loop muted class="video-bg" id="video-bg" poster="./loading.gif">
+							<source src="./assets/videos/tasks.mp4" type="video/mp4" alt="HTML5 background video">
+						</video>						
+					</div>         
+				</div>			
+			</div>
+			<!-- /Row -->
+		</div>
+		<!-- /Container -->
+	</div>
+	<!-- /tasks -->
+
+
+
+
+
+	<!-- study -->
+	<div id="study" class="section md-padding">
+		<!-- Container -->
+		<div class="container">
+			<!-- Row -->
+			<div class="row">
+				<!-- Section header -->
+				<div class="section-header text-center">
+					<h2 class="title">Studied Questions</h2>
+				</div>
+				<div class="abstract-body col-md-12">
+We distill our analysis into three questions: <br>
+<strong> HI. </strong> Whether mid-level vision improves the learning speed (answer: yes) <br>
+<strong> HII. </strong> Whether mid-level vision provides an advantage when generalizing to unseen spaces (yes) <br>
+<strong> HIII. </strong> Whether a fixed mid-level feature can suffice or if a set of features is required for supporting arbitrary motor tasks (a set is essential). <br>
+We use statistical tests to answer these questions where appropriate. 
+
+<div class="figure">
+	<p><strong>The figure below illustrates our approach:</strong>  Left: Features warp the input distribution, potentially making the train and test distributions look more similar
+			to the agent. Middle: The learned features from fixed encoder networks are used as the state for training policies in RL. Right: Downstream tasks prefer
+			features that contain enough information to solve the task while remaining invariant to the task-irrelevant details.</p>
+	<img class='process-figure' src="./img/png/process.png" alt="">
+
+		</div>
+				</div>			
+			</div>
+			<!-- /Row -->
+		</div>
+		<!-- /Container -->
+	</div>
+	<!-- /study -->
+
+
+
+	
+	<!-- Transfers -->
+	<div id="transfers" class="section sm-padding">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-9 col-md-8">
+					<div class="section-header">
+						<h2 class="title">Performance Curves</h2>
+					</div>
+					<p>Compare how well different types of vision enable agents to learn, and whether that training performance is indicative of test performance. In order to evaluate the trained policies, we tested them in environments unseen during training. The following tool allows you to compare training and test curves for agents trained for any task using any of the representations--and to view these side-by-side against informative controls, such as agents trained from scratch.</p>
+					<button class="main-btn centering" onclick="window.location.href='/generalization_curves';"><strong>View Curves</strong></button>
+				</div>
+				<div class="col-lg-3 col-md-4 figure">
+					<embed width="100%" src="./img/png/generalization_analysis.png">						
+					<p><strong>Generalization Gap.</strong> We use mid-level vision to reduce the performance gap between training and test environments.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /Transfers -->
+		
+
+
+	<!-- API -->
+	<div id="policy_explorer" class="section sm-padding bg-grey">
+			
+		<!-- Container -->
+		<div class="container">
+
+			<!-- Row -->
+			<div class="row">
+
+				<!-- API content -->
+				<div class="col-md-6">
+					<div class="section-header">
+						<h2 class="title">Policy Explorer</h2>
+					</div>
+					<p>The provided policiy explorer gives a qualitative overview of what each agent sees and how it behaves. Compare agents that have access to different mid-level features: see sample trajectories, egocentric videos along those trajectories, and readouts of what the agent sees.</p>
+					<button class="main-btn centering"  onclick="window.location.href='/policy_explorer';"><strong>Explore policies</strong></button>
+				</div>
+				<!-- /API content -->
+
+				<!-- Example taxonomy fig -->
+				<div class="col-md-6 figure">
+					<img  width="100%" src="./img/png/trajectories_only.png">						
+					<p><strong>Example trajectories.</strong> Visualizations of sample the trajectories from different features.</p>					
+				</div>
+				<!-- /Example taxonomy fig -->
+
+			</div>
+			<!-- /Row -->
+
+		</div>
+		<!-- /Container -->
+
+	</div>
+	<!-- /API -->
+
+ 
+		<!-- minitaur -->
+	<div id="minitaur" class="section sm-padding bg-grey">
+		<!-- Container -->
+		<div class="container">
+			<!-- Row -->
+			<div class="row">
+
+				<!-- API content -->
+				<div class="col-md-6">
+					<div class="section-header">
+						<h2 class="title">What's next</h2>
+					</div>
+					<p>We are currently working on applying this study to a set of terrestrial robots, e.g. Minitaur (shown in the video). The work is in preparation, and results suggest that these findings also hold on real robots.</p>
+				</div>
+
+				<div class="col-md-6 figure">
+						<video width="100%" height="364" playsinline autoplay center loop muted class="video-bg" id="video-bg" poster="./loading.gif">
+							<source src="./assets/videos/minitaur.mp4" type="video/mp4" alt="HTML5 background video">
+						</video>
+				</div>
+			</div>
+			<!-- /Row -->
+		</div>
+		<!-- /Container -->
+	</div>
+	<!-- /minitaur -->
+			
+
+	<!-- Paper -->
+	<div id="paper" class="section sm-padding bg-grey">
+			
+		<!-- Container -->
+		<div class="container">
+
+			<!-- Row -->
+			<div class="row">	
+				<!-- Section header -->
+				<div class="col-sm-12">
+
+					<div class="row">
+						<div class="col-lg-8 col-m-8 col-sm-12 col-xs-12">
+							<div class="section-header text-center">
+								<h2 class="title">Paper</h2>
+							</div>
+							<div class="col-lg-5 col-m-5 col-sm-5 col-xs-12">
+									<a href="/assets/main_paper.pdf">
+									<img style="width:80%" class="paper-img layered-paper-big" src=./img/paper.png>
+								</a>
+								<br>
+								<br>
+								<br>
+							</div>
+							<div class="col-lg-7 col-m-7 col-sm-7 col-xs-12">
+								<p>Learning to Navigate Using Mid-Level Visual Priors. (CoRL '19)<br>
+								<p>Mid-Level Visual Representations Improve Generalization and Sample Efficiency for Learning Visuomotor Policies. (Arxiv '18)<br>
+								
+								<br>
+									Sax, Zhang, Emi, Zamir, Guibas, Savarese, Malik.<br>
+								</p>						
+								
+								<div class="bibtex">
+									<button class="outline-btn" onclick="window.location.href='/assets/CoRL19_Mid_Level_Main.pdf'"><p>Paper (CoRL '19)<p></button>						
+									<button class="outline-btn" onclick="window.location.href='/assets/main_paper.pdf'"><p>Paper (Arxiv '18)<p></button>						
+									<button class="outline-btn" onclick="window.location.href='/assets/CoRL19_Mid_Level_Sup.pdf'"><p>Supplementary<p></button>						
+									<button class="outline-btn" onclick="window.location.href='/slides'"><p>Slides<p></button>
+									<button class="outline-btn" onclick="window.location.href='https://github.com/alexsax/midlevel-reps'"><p>Github<p></button>												
+									<!-- <button class="outline-btn disabled-btn"><p>Supp. (coming soon)<p></button>												 -->
+									<button href="#bibtex-popup"  class="outline-btn open-popup-link"><p>Bibtex<p></button>		
+										<!-- <button class="outline-btn" onclick="window.location.href='/'"><p>Github<p></button>												 -->
+											<!-- <button class="outline-btn disabled-btn"><p>Slides<p></button>		 -->
+									<div id="bibtex-popup" class="white-popup mfp-hide">		
+											@inproceedings{midLevelReps2018,<br>
+											&emsp;title={Mid-Level Visual Representations Improve Generalization and Sample Efficiency for Learning Visuomotor Policies.},<br>
+											&emsp;author={Alexander Sax and Bradley Emi and Amir R. Zamir and Leonidas J. Guibas and Silvio Savarese and Jitendra Malik},<br>
+											<!-- &emsp;booktitle={IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},<br> -->
+											&emsp;year={2018},<br>
+											<!-- &emsp;organization={IEEE},<br> -->
+											}							
+									</div>
+
+								</div>
+								<br>
+								<br>
+							</div>
+						</div>	
+							
+						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+							<div class="section-header text-center">
+								<h2 class="title">BayLearn 2019</h2>
+							</div>
+							<div class="videoWrapper">
+									<iframe width="100%" height='100%' src="https://www.youtube.com/embed/icBmcfqKZB0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							</div>
+						</div>
+						<!--<button class="outline-btn" onclick="window.location.href='https://storage.googleapis.com/taskonomy_slides/taskonomy_slides.html'"><p>Slides<p></button>-->					
+					</div>
+				</div>
+				<!-- <div class="col-sm-6">
+					<div class="section-header text-center">
+						<h2 class="title">CVPR 2018</h2>
+					</div>
+			        <div class="cvpr-container">
+			            <iframe class="cvpr-oral" border="0" id="" src="https://www.youtube.com/embed/9mdCWMVAMLg?start=137" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style=""></iframe>
+			        </div>
+				</div> -->
+			</div>
+			<!-- /Row -->
+
+		</div>
+		<!-- /Container -->
+
+	</div>
+	<!-- /Paper -->
+
+	<!-- Methods -/-/>
+	<div id="methods" class="section md-padding">
+		<div class="container">
+			<div class="row">
+				<div class="section-header text-center">
+					<h2 class="title">Methods</h2>
+				</div>
+				<div class="abstract-body col-md-12">
+					<p> 
+						We create our taxonomy in a three-step process:
+						<ul>
+							<li><strong>Train tasks:</strong> Train each task using fully supervised learning on a large amount of data.</li>
+							<li><strong>Train transfers:</strong> Train all possible pairwise transfers. A transfer takes the learned representation for one task, and then uses this to predict the output for another task. For example, we trained a network to use the intermediate representation of the normals prediction network to then use these features to do scene classification. We trained all possible pairwise transfers. We also trained higher-order transfers which used more than one source task (e.g. normals AND curvature).</li>
+							<li><strong>Normalize results:</strong> Comparing transfers is nontrivial. For example, how do we determine if normals transfers to scene classification better than edges detection transfers to depth estimation? Scene classification uses cross-entropy loss while depth estimation uses mean L1 loss. The two average losses of the task-specific networks even have different orders of magnitude! We use a tournament graph of all transfers to a task to determine each pairwise win-rate, or how often one transfer achieved a lower loss than another. We come up with a total-ordering based on this pairwise tournament matrix via the Analytic Hierarchy Process. The resulting ordering gives us a priority value for each source, valued between 0 and 1. These values can then be compared across tasks. When computing our taxonomy, we will maximize the total priority.</li>
+						</ul>
+					</p>
+					<p> 						
+						Then we can solve for the taxonomy using a Boolean Integer Program (BIP).<br><br>
+						Page under construction. More details coming soon.
+					</p>
+				</div>			
+				<div class="col-md-12 figure">
+					<img width="100%" class="center" src="./img/svg/taxonomy_significance_transparent.svg">
+					<p><strong>Taxonomy significance.</strong> The green line is our taxonomy, and the grey lines show the performance of a random feasible solution (error bars show standard deviation).</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	</!-/- /Methods -->
+
+
+    
+	<!--  Results -/-!/>
+	<div id="significance" class="section md-padding bg-grey">
+		<div class="container">
+			<div class="row">
+				<div class="section-header text-center">
+					<h2 class="title">Evaluation</h2>
+				</div>
+				<div class="abstract-body col-md-12">
+					<p> 
+						We measure the effectiveness of our networks using two different metrics.
+						<ul>
+							<li><strong>Gain:</strong> The win rate of a network versus standard supervised learning on the same number of data points.</li>
+							<li><strong>Quality:</strong> The win rate of a network versus the task-specific networks trained on 120k images.</li>
+							<br>Page under construction. More details coming soon.
+						</ul>
+
+					</p>
+				</div>			
+				<div class="col-md-12 figure">
+					<img width="100%" class="center" src="./img/svg/taxonomy_significance_transparent.svg">
+					<p><strong>Taxonomy significance.</strong> The green line is our taxonomy, and the grey lines show the performance of a random feasible solution (error bars show standard deviation).</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	</!-/- /Results -->
+
+
+
+	<div id="team" class="section md-padding">
+		
+				<!-- Container -->
+				<div class="container">
+		
+					<!-- Row -->
+					<div class="row">
+		
+						<!-- Section header -->
+						<div class="section-header text-center">
+							<h2 class="title">Authors</h2>
+						</div>
+						<!-- /Section header -->
+		
+
+		
+						<!-- team -->
+						<div class="col-sm-3">
+							<div class="team">
+								<div class="team-img">
+									<img class="img-responsive" src="./img/sasha.png" alt="">
+									<div class="overlay">
+										<div class="team-social">
+											<a href="//alexsax.github.io"><i class="fa fa-globe"></i></a>
+											<a href="//scholar.google.com/citations?user=PIq7jcUAAAAJ&hl=en"><i class="ai ai-google-scholar big-icon"></i></a>
+											<a href="//github.com/alexsax"><i class="fa fa-github"></i></a>
+										</div>
+									</div>
+								</div>
+								<div class="team-content">
+									<h3>Alexander (Sasha) Sax</h3>
+									<span>UC Berkeley, FAIR</span>
+								</div>
+							</div>
+						</div>
+						<!-- /team -->
+
+						<!-- team -->
+						<div class="col-sm-3">
+							<div class="team">
+								<div class="team-img">
+									<img class="img-responsive" src="//jozhang97.github.io/assets/zhang.png" alt="">
+									<div class="overlay">
+										<div class="team-social">
+											<a href="//jozhang97.github.io"><i class="fa fa-globe"></i></a>
+											<!-- <a href="//scholar.google.com/citations?user=mOMChFIAAAAJ&hl=en"><i class="ai ai-google-scholar big-icon"></i></a> -->
+											<a href="//github.com/jozhang97"><i class="fa fa-github"></i></a>
+										</div>
+									</div>
+								</div>
+								<div class="team-content">
+									<h3>Jeffrey O. Zhang</h3>
+									<span>UC Berkeley</span>
+								</div>
+							</div>
+						</div>
+						<!-- team -->
+						
+						<!-- team -->
+						<div class="col-sm-3">
+							<div class="team">
+								<div class="team-img">
+									<img class="img-responsive" src="http://www.bradleyemi.com/img/avatar.jpg" alt="">
+									<div class="overlay">
+										<div class="team-social">
+											<a href="//www.bradleyemi.com"><i class="fa fa-globe"></i></a>
+											<!-- <a href="//scholar.google.com/citations?user=mOMChFIAAAAJ&hl=en"><i class="ai ai-google-scholar big-icon"></i></a> -->
+											<a href="//github.com/bradleyemi"><i class="fa fa-github"></i></a>
+										</div>
+									</div>
+								</div>
+								<div class="team-content">
+									<h3>Bradley Emi</h3>
+									<span>Stanford</span>
+								</div>
+							</div>
+						</div>
+						<!-- team -->
+
+						<!-- team -->
+						<div class="col-sm-3">
+							<div class="team">
+								<div class="team-img">
+									<img class="img-responsive" src="https://cs.stanford.edu/~amirz/index_files/amir18_sq.png" alt="">
+									<div class="overlay">
+										<div class="team-social">
+											<a href="//cs.stanford.edu/~amirz/"><i class="fa fa-globe"></i></a>
+											<a href="https://scholar.google.com/citations?user=RKjEFukAAAAJ&hl=en"><i class="ai ai-google-scholar big-icon"></i></a>
+											<a href="//github.com/amir32002"><i class="fa fa-github"></i></a>
+										</div>
+									</div>
+								</div>
+								<div class="team-content">
+									<h3>Amir Zamir</h3>
+									<span>Stanford, UC Berkeley</span>
+								</div>
+							</div>
+						</div>
+						<!-- /team -->
+
+					</div>					
+					<div class="row">
+							
+						
+		
+						<!-- team -->
+						<div class="col-sm-3">
+							<div class="team">
+								<div class="team-img">
+									<img class="img-responsive" src="./img/leo2.png" alt="">
+									<div class="overlay">
+										<div class="team-social">
+											<a href="//geometry.stanford.edu/member/guibas/"><i class="fa fa-globe"></i></a>
+											<a href="https://scholar.google.com/citations?user=5JlEyTAAAAAJ&hl=en"><i class="ai ai-google-scholar big-icon"></i></a>
+										</div>
+									</div>
+								</div>
+								<div class="team-content">
+									<h3>Leonidas Guibas</h3>
+									<span>Stanford, FAIR</span>
+								</div>
+							</div>
+						</div>
+						<!-- /team -->
+		
+						<!-- team -->
+						<div class="col-sm-3">
+							<div class="team">
+								<div class="team-img">
+									<img class="img-responsive" src="./img/silvio.jpg" alt="">
+									<div class="overlay">
+										<div class="team-social">
+											<a href="http://cvgl.stanford.edu/silvio/"><i class="fa fa-globe"></i></a>
+											<a href="https://scholar.google.com/citations?user=ImpbxLsAAAAJ&hl=en"><i class="ai ai-google-scholar big-icon"></i></a>
+										</div>
+									</div>
+								</div>
+								<div class="team-content">
+									<h3>Silvio Savarese</h3>
+									<span>Stanford</span>
+								</div>
+							</div>
+						</div>
+
+						<!-- team -->
+						<div class="col-sm-3">
+							<div class="team">
+								<div class="team-img">
+									<img class="img-responsive" src="./img/malik.png" alt="">
+									<div class="overlay">
+										<div class="team-social">
+											<a href="//people.eecs.berkeley.edu/~malik/"><i class="fa fa-globe"></i></a>
+											<a href="//scholar.google.com/citations?user=oY9R5YQAAAAJ&hl=en"><i class="ai ai-google-scholar big-icon"></i></a>
+										</div>
+									</div>
+								</div>
+								<div class="team-content">
+									<h3>Jitendra Malik</h3>
+									<span>UC Berkeley, FAIR</span>
+								</div>
+							</div>
+						</div>
+						<!-- /team -->
+						
+						<!-- /team -->
+		
+					</div>
+					<!-- /Row -->
+		
+				</div>
+				<!-- /Container -->
+		
+			</div>
+			<!-- /Team -->
+	<!-- Footer -->
+	<footer id="footer" class="sm-padding bg-dark">
+
+		<!-- Container -->
+		<div class="container">
+
+			<!-- Row -->
+			<div class="row">
+
+				<div class="col-md-12">
+
+					<!-- footer logo -->
+					<!-- <div class="footer-logo">
+							<img width="10%" style="margin-right:25px" class="logo-alt" src="./img/svg/SVLLogo_white.svg" alt="logo">
+							<img width="10%" class="logo-alt" src="./img/svg/bair_white.svg" alt="logo">
+					</div> -->
+					<!-- /footer logo -->
+
+					<!-- footer follow -->
+					<ul class="footer-follow">
+						<li><a href="https://github.com/alexsax/midlevel-reps"><i class="fa fa-github"></i></a></li>
+						<!--<li><a href="https://svl.stanford.edu/home"><i class="fa fa-globe"></i></a></li>-->
+						<!--<li><a href="https://twitter.com/StanfordCVGL"><i class="fa fa-twitter"></i></a></li>-->
+						<!-- <li><a href="#"><i class="ai ai-google-scholar big-icon"></i></a></li> -->
+						<!-- <li><a href="#"><i class="fa fa-instagram"></i></a></li> -->
+						<!-- <li><a href="#"><i class="fa fa-linkedin"></i></a></li> -->
+					</ul>
+					<!-- /footer follow -->
+
+					<!-- footer copyright -->
+					<div class="footer-copyright">
+						<p>Copyright © 2018. Patent Pending. All Rights Reserved.</p>
+						<br>
+						<p>
+						<a href=https://colorlib.com/wp/template/creative-agency>Template.</a>
+						<a href=https://colorlib.com/wp/template/creative-agency>Landing background.</a>
+						<p>
+					</div>
+					<!-- /footer copyright -->
+
+				</div>
+
+			</div>
+			<!-- /Row -->
+
+		</div>
+		<!-- /Container -->
+
+	</footer>
+	<!-- /Footer -->
+
+	<!-- Back to top -->
+	<div id="back-to-top"></div>
+	<!-- /Back to top -->
+
+	<!-- Preloader -->
+	<!-- <div id="preloader">
+		<div class="preloader">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</div> -->
+	<!-- /Preloader -->
+
+
+	<!-- jQuery Plugins -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.6/d3.min.js"></script>
+	<script src="https://unpkg.com/d3-hilbert"></script>
+	<script src="js/plugins.js"></script>
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<script src="js/waypoints.min.js"></script>
+	<script src="js/jquery.counterup.min.js"></script>
+	
+	<!-- <script type="text/javascript" src="js/jquery.min.js"></script> -->
+	<!-- <script type="text/javascript" src="js/bootstrap.min.js"></script> -->
+
+	<script type="text/javascript" src="js/owl.carousel.min.js"></script>
+	<script type="text/javascript" src="js/jquery.magnific-popup.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<script src="js/index.js"></script>
+
+<!-- Default Statcounter code for Perceptual.actor
+http://perceptual.actor/ -->
+<script type="text/javascript">
+var sc_project=11933795; 
+var sc_invisible=1; 
+var sc_security="adf6275d"; 
+</script>
+<script type="text/javascript"
+src="https://www.statcounter.com/counter/counter.js"
+async></script>
+<noscript><div class="statcounter"><a title="Web Analytics"
+href="https://statcounter.com/" target="_blank"><img
+class="statcounter"
+src="https://c.statcounter.com/11933795/0/adf6275d/1/"
+alt="Web Analytics"></a></div></noscript>
+<!-- End of Statcounter Code -->
+	
+</body>
+
+</html>
